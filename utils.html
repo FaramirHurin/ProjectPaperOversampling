@@ -1,0 +1,845 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="author" title="About these documents" href="about.html" /><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="About" href="about.html" /><link rel="prev" title="Oversampler" href="oversampler.html" />
+
+    <!-- Generated with Sphinx 6.1.3 and Furo 2023.03.27 -->
+        <title>Utils - ADVO documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">ADVO  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/advo2.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">ADVO  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="generator.html">Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oversampler.html">Oversampler</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="utils">
+<h1>Utils<a class="headerlink" href="#utils" title="Permalink to this heading">#</a></h1>
+<section id="module-utils.compute_metrics">
+<span id="utils-compute-metrics-module"></span><h2>utils.compute_metrics module<a class="headerlink" href="#module-utils.compute_metrics" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.compute_metrics.compute_metrics_remove_cards">
+<span class="sig-prename descclassname"><span class="pre">utils.compute_metrics.</span></span><span class="sig-name descname"><span class="pre">compute_metrics_remove_cards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ytest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_cards_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_cards_fraud_train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/utils/compute_metrics.html#compute_metrics_remove_cards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.compute_metrics.compute_metrics_remove_cards" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute various classification metrics for a model’s predictions, including accuracy, precision, recall, f1 score,
+and partial AUC (pAUC). The pAUCs are computed for different percentiles (pk10, pk20, pk50, pk100, pk300, pk1000)
+and for the entire population (prauc) and a reference population (cprauc).</p>
+<p>Parameters:
+- ytest: A pandas Series with the true labels for the test set.
+- prediction_scores: A numpy array with the prediction scores for the test set.
+- id_cards_test: A pandas Series with the card IDs for the test set.
+- id_cards_fraud_train: A numpy array with the card IDs that were labeled as fraud in the training set.</p>
+<p>Returns:
+- A tuple with the values for the following metrics: accuracy, precision, recall, f1 score, pk10, pk20, pk50, pk100,</p>
+<blockquote>
+<div><p>pk300, pk1000, prauc, cprauc.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.compute_metrics.compute_pk">
+<span class="sig-prename descclassname"><span class="pre">utils.compute_metrics.</span></span><span class="sig-name descname"><span class="pre">compute_pk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trueY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/utils/compute_metrics.html#compute_pk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.compute_metrics.compute_pk" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the precision for the top K predictions.</p>
+<p>Parameters:
+- trueY: A numpy array with the true labels.
+- predictions: A numpy array with the prediction scores.
+- K: An integer specifying the number of top predictions to consider.</p>
+<p>Returns:
+- The precision for the top K predictions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.compute_metrics.evaluate_models">
+<span class="sig-prename descclassname"><span class="pre">utils.compute_metrics.</span></span><span class="sig-name descname"><span class="pre">evaluate_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions_proba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K_needed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PrecisionRecallDisplay</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/utils/compute_metrics.html#evaluate_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.compute_metrics.evaluate_models" title="Permalink to this definition">#</a></dt>
+<dd><p>This function takes in a list of probability predictions, a list of discrete predictions, a list of names for each model, the true labels for the test set, and a list of K values for the pk metric. It returns a list of PrecisionRecallDisplay objects, a DataFrame with metrics for each model, and a dictionary with pk scores for each model.</p>
+<p>Copy code
+:param predictions_proba: A list of probability predictions for each model
+:param discrete_predictions: A list of discrete predictions for each model
+:param names: A list of strings with names for each model
+:param y_test: The true labels for the test set
+:param K_needed: A list of K values for the pk metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple with a list of PrecisionRecallDisplay objects, a DataFrame with metrics for each model, and a dictionary with pk scores for each model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-utils.fraud_metrics">
+<span id="utils-fraud-metrics-module"></span><h2>utils.fraud_metrics module<a class="headerlink" href="#module-utils.fraud_metrics" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.amount_saved">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">amount_saved</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amounts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#amount_saved"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.amount_saved" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the amount saved by correctly predicting fraudulent transactions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>amounts</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Amounts associated with the transactions.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>amount</strong> – Amount saved by correctly predicting fraudulent transactions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>cards</cite> is not None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.apply_threshold">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">apply_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/utils/fraud_metrics.html#apply_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.apply_threshold" title="Permalink to this definition">#</a></dt>
+<dd><p>Applies a threshold to the <cite>y_score</cite> list and returns a list of boolean values indicating
+whether each score is greater than or equal to the threshold.</p>
+<p>Parameters:
+- y_score: a list of float values representing the predicted scores
+- threshold: a float value representing the threshold to apply to the <cite>y_score</cite> values</p>
+<p>Returns:
+- A list of boolean values indicating whether each score in <cite>y_score</cite> is greater than or equal to <cite>threshold</cite></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.average_precision">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">average_precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recall_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sorted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#average_precision"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.average_precision" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate average precision at the given recall value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_score</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Scores associated with the samples.</p></li>
+<li><p><strong>recall_value</strong> (<em>float</em>) – Recall value at which to calculate average precision.</p></li>
+<li><p><strong>sorted</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether <cite>y_true</cite> and <cite>y_score</cite> are already sorted in descending order of <cite>y_score</cite>.</p></li>
+<li><p><strong>reference_ratio</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Ratio of frauds in the reference data set. If provided, will be used to calculate the calibrated average precision.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>average_precision</strong> – Average precision at the given recall value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.count">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/utils/fraud_metrics.html#count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.count" title="Permalink to this definition">#</a></dt>
+<dd><p>Counts the number of elements in the <cite>y_true</cite> list or the number of unique card ids in the <cite>cards</cite> list.</p>
+<p>Parameters:
+- y_true: a list of integer values representing the true labels
+- type: a string value indicating the type of count to perform.</p>
+<blockquote>
+<div><p>Valid values are “tx” (transactions) and “card” (unique card ids).</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>cards: an optional list of string values representing the card ids for the transactions in <cite>y_true</cite>
+Required if <cite>type</cite> is “card”.</p></li>
+</ul>
+<p>Returns:
+- An integer value representing the number of elements in <cite>y_true</cite> if <cite>type</cite> is “tx”,</p>
+<blockquote>
+<div><p>or the number of unique card ids in <cite>cards</cite> if <cite>type</cite> is “card”.</p>
+</div></blockquote>
+<p>Raises:
+- ValueError: if <cite>type</cite> is invalid or <cite>cards</cite> is required but not provided</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.count_fraud">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">count_fraud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#count_fraud"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.count_fraud" title="Permalink to this definition">#</a></dt>
+<dd><p>Count the number of fraudulent transactions or cards.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of count to perform. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>count</strong> – Number of fraudulent transactions or cards.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.f_score">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">f_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#f_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.f_score" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the F1 score of the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of F1 score to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+<li><p><strong>reference_ratio</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Reference ratio to use for calibration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>f1_score</strong> – F1 score of the predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.false_negative">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">false_negative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#false_negative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.false_negative" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the number of false negative predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of count to perform. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>count</strong> – Number of false negative predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.false_positive">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">false_positive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#false_positive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.false_positive" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the number of false positive predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of count to perform. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>count</strong> – Number of false positive predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.pk">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">pk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sorted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#pk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.pk" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the pk score of the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_score</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Scores associated with the samples.</p></li>
+<li><p><strong>rank</strong> (<em>int</em>) – Number of items to consider in the pk score.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of pk score to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>sorted</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – If True, it is assumed that <cite>y_true</cite> and <cite>y_score</cite> are already sorted in decreasing order.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>pk_score</strong> – PK score of the predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.plot_f_score_curve">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">plot_f_score_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precisions_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recalls_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_scores_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#plot_f_score_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.plot_f_score_curve" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot F-score curve and optionally save the curve and related data to files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_score</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Scores associated with the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of precision-recall curve to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Title for the plot.</p></li>
+<li><p><strong>plot_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the plot to the specified file.</p></li>
+<li><p><strong>thresholds_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the thresholds to the specified file.</p></li>
+<li><p><strong>precisions_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the precisions to the specified file.</p></li>
+<li><p><strong>recalls_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the recalls to the specified file.</p></li>
+<li><p><strong>f_scores_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the f-scores to the specified file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.plot_precision_recall_curve">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">plot_precision_recall_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precisions_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recalls_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds_save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#plot_precision_recall_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.plot_precision_recall_curve" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots a precision-recall curve and optionally saves the curve to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_score</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Scores associated with the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of precision-recall curve to plot. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Title for the plot.</p></li>
+<li><p><strong>plot_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the plot to the specified file.</p></li>
+<li><p><strong>precisions_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the precisions to the specified file.</p></li>
+<li><p><strong>recalls_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the recalls to the specified file.</p></li>
+<li><p><strong>thresholds_save_path</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – If provided, saves the thresholds to the specified file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.pr_auc">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">pr_auc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recall_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sorted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#pr_auc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.pr_auc" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate precision-recall area under the curve (PR-AUC).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_score</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Scores associated with the samples.</p></li>
+<li><p><strong>recall_value</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=1.0</em><em>)</em>) – Recall value at which to calculate average precision.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of precision-recall curve to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+<li><p><strong>sorted</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether <cite>y_true</cite> and <cite>y_score</cite> are already sorted in descending order of <cite>y_score</cite>.</p></li>
+<li><p><strong>reference_ratio</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Ratio of frauds in the reference data set. If provided, will be used to calculate the calibrated average precision.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>pr_auc</strong> – Precision-recall area under the curve.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.pr_auc_from_precision_recall_curve">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">pr_auc_from_precision_recall_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recall_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#pr_auc_from_precision_recall_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.pr_auc_from_precision_recall_curve" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate precision-recall area under the curve (PR-AUC) from precision-recall curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_score</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Scores associated with the samples.</p></li>
+<li><p><strong>recall_value</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=1.0</em><em>)</em>) – Recall value at which to calculate average precision.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of precision-recall curve to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>pr_auc</strong> – Precision-recall area under the curve.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.precision">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#precision"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.precision" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the precision of the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of precision to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+<li><p><strong>reference_ratio</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Reference ratio to use for calibration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>precision</strong> – Precision of the predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.precision_recall_curve">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">precision_recall_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#precision_recall_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.precision_recall_curve" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate precision-recall curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_score</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Scores associated with the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of precision-recall curve to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>precision</strong> (<em>array, shape (n_thresholds + 1,)</em>) – Precision values.</p></li>
+<li><p><strong>recall</strong> (<em>array, shape (n_thresholds + 1,)</em>) – Recall values.</p></li>
+<li><p><strong>thresholds</strong> (<em>array, shape (n_thresholds + 1,)</em>) – Decreasing score thresholds on the decision function.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.recall">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#recall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.recall" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the recall of the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of recall to calculate. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>recall</strong> – Recall of the predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.sort_in_unison">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">sort_in_unison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/utils/fraud_metrics.html#sort_in_unison"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.sort_in_unison" title="Permalink to this definition">#</a></dt>
+<dd><p>Sorts the <cite>y_true</cite> and <cite>y_score</cite> lists in descending order based on the <cite>y_score</cite> values.
+If the <cite>cards</cite> parameter is provided, it is sorted in the same order as <cite>y_true</cite> and <cite>y_score</cite>.</p>
+<p>Parameters:
+- y_true: a list of integer values representing the true labels
+- y_score: a list of float values representing the predicted scores for the labels in <cite>y_true</cite>
+- cards: an optional list of string values representing the card ids for the transactions in <cite>y_true</cite></p>
+<p>Returns:
+- A tuple of lists containing <cite>y_true</cite> and <cite>y_score</cite> sorted in descending order by <cite>y_score</cite>,</p>
+<blockquote>
+<div><p>and if <cite>cards</cite> is provided, also including the sorted <cite>cards</cite> list</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.true_negative">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">true_negative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#true_negative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.true_negative" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the number of true negative predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of count to perform. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>count</strong> – Number of true negative predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.fraud_metrics.true_positive">
+<span class="sig-prename descclassname"><span class="pre">utils.fraud_metrics.</span></span><span class="sig-name descname"><span class="pre">true_positive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cards</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/fraud_metrics.html#true_positive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.fraud_metrics.true_positive" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the number of true positive predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True labels of the samples.</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted labels of the samples.</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;tx&quot;</em><em>)</em>) – Type of count to perform. Can be either “tx” for transactions or “card” for cards.</p></li>
+<li><p><strong>cards</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Card identifiers for the transactions. Required when <cite>type</cite> is “card”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>count</strong> – Number of true positive predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>type</cite> is not “tx” or “card”.
+    If <cite>cards</cite> is None when <cite>type</cite> is “card”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-utils.kde">
+<span id="utils-kde-module"></span><h2>utils.kde module<a class="headerlink" href="#module-utils.kde" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.kde.compute_kde_difference_auc">
+<span class="sig-prename descclassname"><span class="pre">utils.kde.</span></span><span class="sig-name descname"><span class="pre">compute_kde_difference_auc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/utils/kde.html#compute_kde_difference_auc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.kde.compute_kde_difference_auc" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the area under the curve (AUC) of the absolute difference between the kernel density estimates (KDE) of
+multiple pandas DataFrames for the specified columns.</p>
+<p>Parameters:
+- Xy: A list of tuples, where each tuple consists of a pandas DataFrame (X) and a pandas DataFrame (y). The X</p>
+<blockquote>
+<div><p>DataFrame should contain the columns for which the KDEs will be computed.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>columns: A list of strings specifying the names of the columns for which the KDEs will be computed.</p></li>
+<li><dl class="simple">
+<dt>names: A list of strings to use as the row names in the resulting pd.DataFrame. The first two names will be</dt><dd><p>discarded, as they correspond to the X and y DataFrames.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns:
+- A pandas DataFrame with the AUCs of the absolute difference between the KDEs of the specified columns in the X</p>
+<blockquote>
+<div><p>DataFrames. The rows are named using the elements of the ‘names’ parameter, starting from the third element. The
+columns are named using the elements of the ‘columns’ parameter.</p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="about.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">About</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="oversampler.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Oversampler</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Daniele Lunghi, Gian Marco Paldino
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Utils</a><ul>
+<li><a class="reference internal" href="#module-utils.compute_metrics">utils.compute_metrics module</a><ul>
+<li><a class="reference internal" href="#utils.compute_metrics.compute_metrics_remove_cards"><code class="docutils literal notranslate"><span class="pre">compute_metrics_remove_cards()</span></code></a></li>
+<li><a class="reference internal" href="#utils.compute_metrics.compute_pk"><code class="docutils literal notranslate"><span class="pre">compute_pk()</span></code></a></li>
+<li><a class="reference internal" href="#utils.compute_metrics.evaluate_models"><code class="docutils literal notranslate"><span class="pre">evaluate_models()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-utils.fraud_metrics">utils.fraud_metrics module</a><ul>
+<li><a class="reference internal" href="#utils.fraud_metrics.amount_saved"><code class="docutils literal notranslate"><span class="pre">amount_saved()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.apply_threshold"><code class="docutils literal notranslate"><span class="pre">apply_threshold()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.average_precision"><code class="docutils literal notranslate"><span class="pre">average_precision()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.count"><code class="docutils literal notranslate"><span class="pre">count()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.count_fraud"><code class="docutils literal notranslate"><span class="pre">count_fraud()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.f_score"><code class="docutils literal notranslate"><span class="pre">f_score()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.false_negative"><code class="docutils literal notranslate"><span class="pre">false_negative()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.false_positive"><code class="docutils literal notranslate"><span class="pre">false_positive()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.pk"><code class="docutils literal notranslate"><span class="pre">pk()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.plot_f_score_curve"><code class="docutils literal notranslate"><span class="pre">plot_f_score_curve()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.plot_precision_recall_curve"><code class="docutils literal notranslate"><span class="pre">plot_precision_recall_curve()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.pr_auc"><code class="docutils literal notranslate"><span class="pre">pr_auc()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.pr_auc_from_precision_recall_curve"><code class="docutils literal notranslate"><span class="pre">pr_auc_from_precision_recall_curve()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.precision"><code class="docutils literal notranslate"><span class="pre">precision()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.precision_recall_curve"><code class="docutils literal notranslate"><span class="pre">precision_recall_curve()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.recall"><code class="docutils literal notranslate"><span class="pre">recall()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.sort_in_unison"><code class="docutils literal notranslate"><span class="pre">sort_in_unison()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.true_negative"><code class="docutils literal notranslate"><span class="pre">true_negative()</span></code></a></li>
+<li><a class="reference internal" href="#utils.fraud_metrics.true_positive"><code class="docutils literal notranslate"><span class="pre">true_positive()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-utils.kde">utils.kde module</a><ul>
+<li><a class="reference internal" href="#utils.kde.compute_kde_difference_auc"><code class="docutils literal notranslate"><span class="pre">compute_kde_difference_auc()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    </body>
+</html>
